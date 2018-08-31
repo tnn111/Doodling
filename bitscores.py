@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 import itertools
+import math
 
 blosum62_scores = {'A': 4, 'R': 5, 'N': 6, 'D': 6, 'C': 9, 'Q': 5, 'E': 5, 'G': 6, 'H': 8, 'I': 4,
                    'L': 4, 'K': 5, 'M': 5, 'F': 6, 'P': 7, 'S': 4, 'T': 5, 'W': 11, 'Y': 7, 'V': 4,
                    'B': 4, 'J': 3, 'Z': 4, 'X': -1, '*': 1}
+
+Lambda = 0.305935; K = 0.102404
 
 def fasta_as_tuples(file):
 
@@ -23,4 +26,5 @@ def fasta_as_tuples(file):
 with open('Tara.faa') as fd:
     for key in fasta_as_tuples(fd):
         raw_score = sum(blosum62_scores[key[1][i]] for i in range(len(key[1])))
-        print(key[0], raw_score, sep = '\t')
+        bit_score = (Lambda * raw_score - math.log(K))/math.log(2.0)
+        print(key[0], raw_score, round(bit_score), sep = '\t')
