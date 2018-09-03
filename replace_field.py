@@ -14,7 +14,7 @@ def replace_field(base, field, replacement):
     with open(base) as fd:
         for line in fd:
             line = line.strip().split()
-            print(*line[0:field], line[field], replacements[line[field]], *line[field + 1:], sep = '\t')
+            print(*line[0:field], line[field], replacements.get(line[field]), *line[field + 1:], sep = '\t')
 
 
 if __name__ == '__main__':
