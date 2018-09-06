@@ -7,13 +7,13 @@ def replace_field(base, field, replacement):
     replacements = {}
     with open(replacement) as fd:
         for line in fd:
-            fields = line.split()
+            fields = line.strip().split('\t')
             if len(fields) >= 2:
                 replacements[fields[0]] = str(fields[1])
 
     with open(base) as fd:
         for line in fd:
-            line = line.strip().split()
+            line = line.strip().split('\t')
             print(*line[0:field], line[field], replacements.get(line[field]), *line[field + 1:], sep = '\t')
 
 
